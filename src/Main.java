@@ -3,12 +3,13 @@ import java.util.Scanner;
 public class Main {
   public static void main(String[] args) {
     int[][][] sudoku = new int[9][9][9];
+    int durability =0;
     //Zapełnienie sudoku początkowymi liczbami: całe sudoku[pozycja x][pozycja y][liczba]=obecność
     startNumbersOfSudoku(sudoku);
 
     sudokuOut(sudoku);
     sudokuOutAll(sudoku);
-    while (endOfProgram(sudoku)) {
+    while (endOfProgram(sudoku)||durability==81) {
       //stawianie niemożliwości wypełnienia numerem
       noNumberInSquare(sudoku);
 
@@ -20,7 +21,11 @@ public class Main {
       //wyświetlanie sudoku
       sudokuOutAll(sudoku);
       sudokuOut(sudoku);
+      durability++;
+      if (durability == 81) System.out.print("Sudoku nie możliwe do rozwiązania w tej wersji programu");
     }
+
+
   }
 
   private static void sudokuOutAll(int[][][] sudoku) {
@@ -37,18 +42,26 @@ public class Main {
   }
 
   private static void sudokuOut(int[][][] sudoku) {
+    System.out.print("-------------------");
+    System.out.println();
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
         for (int k = 0; k < 9; k++) {
           if (sudoku[i][j][k] == 1) {
             int z = k + 1;
-            System.out.print(" " + z);
+            if(j%3==0) System.out.print("|" + z);
+            else System.out.print(" " + z);
             break;
           } else if (k == 8) {
-            int y = 0;
-            System.out.print(" " + y);
+            if(j%3==0) System.out.print("|" + 0);
+            else System.out.print(" " + 0);
           }
         }
+      }
+      System.out.print("|");
+      if(i%3==2) {
+        System.out.println();
+        System.out.print("-------------------");
       }
       System.out.println();
     }
